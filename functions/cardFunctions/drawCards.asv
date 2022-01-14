@@ -1,0 +1,50 @@
+function [newCards, deck] = drawCards(deck, numCards, varargin)
+%DRAWCARD Summary of this function goes here
+%   Detailed explanation goes here
+
+% Assign optional parmss
+temp = 0;
+for entry = 1:2: length(varargin)
+    parm = lower(varargin{entry});
+    value = varargin{entry + 1};
+    
+    switch(parm)
+        case("temp")
+            temp = value;
+        otherwise
+            disp("Error->drawCards->ParmNotFound: " + parm);
+    end
+end
+
+% Constants:
+numCardsInSuit = length(deck{1}{1}{2, 1}{1});
+numSuits = size(deck{1}{1}, 2);
+
+% Begin Drawing cards:
+newCards = cell(1, numCards);
+for cardIndex = 1: numCards
+    % Get the card number:
+    cardNumber = deck{2, 1}{1}(1);
+
+    % Update the deck order:
+    % I read from the front of the list but this can be reversed
+    deck{2, 1}{1} = deck{2, 1}{1}(2:end);
+    
+    suitNum = 1;
+    while(cardNumber > numCardsInSuit)
+        cardNumber = cardNumber - numCardsInSuit;
+        suitNum = suitNum + 1;
+    end
+
+    card = deck{1,1}{1}{2, suitNum}{1}(cardNumber);
+
+    newCards(cardIndex) = {[suitNum, card]};
+end
+
+
+
+
+
+
+end
+
